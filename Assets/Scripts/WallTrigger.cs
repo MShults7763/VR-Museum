@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class DistanceTrigger : MonoBehaviour
+public class WallTrigger : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private float activationDistance = 3.0f;
     [SerializeField] private float resetDelay = 10.0f;
-    [SerializeField] private string triggerName = "StartAnim";
+    [SerializeField] private string triggerName = "NextAnim";
     private float timer;
-
-    float distance;
 
 
     private Animator anim;
@@ -23,23 +21,18 @@ public class DistanceTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distance = Vector3.Distance(this.transform.position, target.position);
-        if (distance < activationDistance && timer <=0)
-        {
+        float distance = Vector3.Distance(this.transform.position, target.position);
+        if (distance < activationDistance && timer <= 0)
             Activate();
+        {
+
         }
-        if(timer > 0) timer -= Time.deltaTime;
+        if (timer > 0) timer -= Time.deltaTime;
     }
 
     void Activate()
     {
-        anim.Play("iPi Default Take");
+        anim.SetTrigger(triggerName);
         timer = resetDelay;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, activationDistance);
     }
 }
