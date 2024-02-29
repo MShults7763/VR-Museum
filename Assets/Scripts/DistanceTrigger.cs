@@ -8,17 +8,19 @@ public class DistanceTrigger : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float activationDistance = 3.0f;
     [SerializeField] private float resetDelay = 10.0f;
-    [SerializeField] private string triggerName = "StartAnim";
     private float timer;
 
     float distance;
 
 
     private Animator anim;
+    private AudioSource audioSource;
     void Start()
     {
         anim = this.GetComponent<Animator>();
+        audioSource = this.GetComponent<AudioSource>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -31,9 +33,13 @@ public class DistanceTrigger : MonoBehaviour
         if(timer > 0) timer -= Time.deltaTime;
     }
 
-    void Activate()
-    {
+    void Activate(){
         anim.Play("iPi Default Take");
+
+        if (audioSource != null){
+            audioSource.Play();
+        }
+
         timer = resetDelay;
     }
 
